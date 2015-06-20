@@ -4,27 +4,32 @@ static Window *s_main_window;
 static Layer *s_canvas_layer;
 static TextLayer *s_time_layer;
 static GFont s_time_font;
-static int s_random;
+static int s_random = 4;
 static int temp_random;
 static GDrawCommandImage *s_command_image;
 
 static void update_background(){
-	temp_random = rand() % 3;
 	
-	while(temp_random == s_random){
+	if(s_random == 4){
+		s_random = 0;
+	} else {
+	
 		temp_random = rand() % 3;
+	
+		while(temp_random == s_random){
+		    temp_random = rand() % 3;
+	    }
+	
+	    s_random = temp_random;
+	
+	    if(s_random == 0){
+		    window_set_background_color(s_main_window, GColorTiffanyBlue);
+	    } else if(s_random == 1){
+		    window_set_background_color(s_main_window, GColorFolly);
+	    } else if(s_random == 2){
+		    window_set_background_color(s_main_window, GColorChromeYellow);
+	    }
 	}
-	
-	s_random = temp_random;
-	
-	if(s_random == 0){
-		window_set_background_color(s_main_window, GColorTiffanyBlue);
-	} else if(s_random == 1){
-		window_set_background_color(s_main_window, GColorFolly);
-	} else if(s_random == 2){
-		window_set_background_color(s_main_window, GColorChromeYellow);
-	}
-	
 }
 
 static void update_time(){
@@ -114,7 +119,7 @@ static void window_unload(Window *window) {
 static void init() {
     // Set up main Window
     s_main_window = window_create();
-   // window_set_background_color(s_main_window, GColorTiffanyBlue);
+    window_set_background_color(s_main_window, GColorFolly);
     window_set_window_handlers(s_main_window, (WindowHandlers) {
         .load = window_load,
         .unload = window_unload,
@@ -124,11 +129,9 @@ static void init() {
 	
 	// make sure the time is displayed from the start
 	update_time();
-	update_background();
 	
 	// register with ticktimerservice
 	tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
-	//tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
 }
 
 static void deinit() {

@@ -3,8 +3,8 @@
     "capabilities": [
         ""
     ],
-    "companyName": "tristan@tristan-brookes.co.uk",
-    "longName": "DOGE",
+    "companyName": "Tristan Brookes",
+    "longName": "DOGEFACE",
     "projectType": "native",
     "resources": {
         "media": [
@@ -21,7 +21,7 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "DOGE",
+    "shortName": "DOGEFACE",
     "targetPlatforms": [
         "basalt"
     ],
