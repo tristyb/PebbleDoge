@@ -3,26 +3,28 @@
 static Window *s_main_window;
 static Layer *s_canvas_layer;
 static TextLayer *s_time_layer;
-static TextLayer *s_wow_layer;
 static GFont s_time_font;
-static GFont s_wow_font;
 static int s_random;
-
+static int temp_random;
 static GDrawCommandImage *s_command_image;
 
-static void wow_text(){
-	s_random = rand() % 3;
+static void update_background(){
+	temp_random = rand() % 3;
+	
+	while(temp_random == s_random){
+		temp_random = rand() % 3;
+	}
+	
+	s_random = temp_random;
 	
 	if(s_random == 0){
-		text_layer_set_text(s_wow_layer,"such time");
-		text_layer_set_text_color(s_wow_layer, GColorFashionMagenta);
-	} else if (s_random == 1){
-		text_layer_set_text(s_wow_layer,"very pebble");
-		text_layer_set_text_color(s_wow_layer, GColorCyan);
-	} else if (s_random == 2){
-		text_layer_set_text(s_wow_layer,"much watch");
-		text_layer_set_text_color(s_wow_layer, GColorGreen);
+		window_set_background_color(s_main_window, GColorTiffanyBlue);
+	} else if(s_random == 1){
+		window_set_background_color(s_main_window, GColorFolly);
+	} else if(s_random == 2){
+		window_set_background_color(s_main_window, GColorChromeYellow);
 	}
+	
 }
 
 static void update_time(){
@@ -44,7 +46,7 @@ static void update_time(){
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed){
 	update_time();
-	wow_text();
+	update_background();
 }
 
 static void update_proc(Layer *layer, GContext *ctx) {
@@ -78,7 +80,7 @@ static void window_load(Window *window) {
 	// Create time TextLayer
  	s_time_layer = text_layer_create(GRect(0, 0, 144, 50));
   	text_layer_set_background_color(s_time_layer, GColorClear);
-  	text_layer_set_text_color(s_time_layer, GColorBlack  );
+  	text_layer_set_text_color(s_time_layer, GColorWhite  );
   	text_layer_set_text(s_time_layer, "00:00");
 
   	// create gfont
@@ -93,20 +95,6 @@ static void window_load(Window *window) {
 
   	// Add it as a child layer to the Window's root layer
   	layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
-	
-	// Create wow layer
-	s_wow_layer = text_layer_create(GRect(10,136,124,50));
-	text_layer_set_background_color(s_wow_layer, GColorClear);
-  	text_layer_set_text_color(s_wow_layer, GColorBlack  );
-	
-	// create gfont
-  	s_wow_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_COMIC_NEUE_BOLD_20));
-	
-	// Improve the layout to be more like a watchface
-  	text_layer_set_font(s_wow_layer, s_wow_font);
-	
-	// Add it as a child layer to the Window's root layer
-  	layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_wow_layer));
 }
 
 static void window_unload(Window *window) {
@@ -118,17 +106,15 @@ static void window_unload(Window *window) {
 	
 	// destroy text layer
 	text_layer_destroy(s_time_layer);
-	text_layer_destroy(s_wow_layer);
 	
 	// unload gfont
 	fonts_unload_custom_font(s_time_font);
-	fonts_unload_custom_font(s_wow_font);
 }
 
 static void init() {
     // Set up main Window
     s_main_window = window_create();
-    window_set_background_color(s_main_window, GColorMayGreen);
+   // window_set_background_color(s_main_window, GColorTiffanyBlue);
     window_set_window_handlers(s_main_window, (WindowHandlers) {
         .load = window_load,
         .unload = window_unload,
@@ -138,7 +124,7 @@ static void init() {
 	
 	// make sure the time is displayed from the start
 	update_time();
-	wow_text();
+	update_background();
 	
 	// register with ticktimerservice
 	tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
