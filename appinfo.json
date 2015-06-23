@@ -12,6 +12,14 @@
                 "type": "png"
             },
             {
+                "file": "images/doge-dithered.png",
+                "name": "DOGE_DITHERED",
+                "type": "png",
+                "targetPlatforms": [
+                    "aplite"
+                ]
+            },
+            {
                 "file": "fonts/ComicNeue-Bold.ttf",
                 "name": "COMIC_NEUE_BOLD_38",
                 "type": "font"
@@ -29,7 +37,7 @@
         "basalt"
     ],
     "uuid": "0f88b7df-8850-4c0c-a9db-df8504c185e8",
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
         "watchface": true
     }
