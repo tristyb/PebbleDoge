@@ -27,17 +27,20 @@
             {
                 "file": "data/doge-small.pdc",
                 "name": "DOGE_PDC",
-                "type": "raw"
+                "type": "raw",
+                "targetPlatforms": [
+                    "basalt"
+                ]
             }
         ]
     },
     "sdkVersion": "3",
     "shortName": "DOGEFACE",
     "targetPlatforms": [
-        "basalt"
+        "aplite", "basalt"
     ],
     "uuid": "0f88b7df-8850-4c0c-a9db-df8504c185e8",
-    "versionLabel": "1.1",
+    "versionLabel": "1.2",
     "watchapp": {
         "watchface": true
     }
