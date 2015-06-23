@@ -1,5 +1,5 @@
 #include <pebble.h>
-
+	
 static Window *s_main_window;
 static Layer *s_canvas_layer;
 static TextLayer *s_time_layer;
@@ -144,3 +144,4 @@ int main() {
     app_event_loop();
     deinit();
 }
+

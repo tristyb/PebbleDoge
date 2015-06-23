@@ -1,13 +1,16 @@
 {
     "appKeys": {},
-    "capabilities": [
-        ""
-    ],
     "companyName": "Tristan Brookes",
     "longName": "DOGEFACE",
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "images/menu-icon.png",
+                "menuIcon": true,
+                "name": "MENU_ICON",
+                "type": "png"
+            },
             {
                 "file": "fonts/ComicNeue-Bold.ttf",
                 "name": "COMIC_NEUE_BOLD_38",
